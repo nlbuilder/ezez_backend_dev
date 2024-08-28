@@ -55,6 +55,11 @@ const createBusinessStaff = async (req: Request, res: Response) => {
             disabled: false,
         });
 
+        // split the staffRecord.displayName into first name and last name
+        const nameArr = staffRecord.displayName?.split(" ");
+        const firstName = nameArr?.[0];
+        const lastName = nameArr?.[1];
+
         // create a new staff and save it to the business_staff_info collection
         // using findOneAndUpdate with upsert option
         const staff = await businessStaffInfo.findOneAndUpdate(
@@ -62,7 +67,8 @@ const createBusinessStaff = async (req: Request, res: Response) => {
             {
                 $set: {
                     businessId,
-                    name,
+                    firstName,
+                    lastName,
                     addressLine1,
                     addressLine2,
                     city,

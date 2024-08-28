@@ -6,7 +6,8 @@ import { IBusinessInfo, IBusinessStaffInfo } from "../types/typeBusinessInfo";
 const businessStaffInfoSchema = new Schema<IBusinessStaffInfo>({
     businessStaffId: { type: String, required: true, unique: true },
     businessId: { type: String, required: true },
-    name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String },
     addressLine1: { type: String },
     addressLine2: { type: String },
     city: { type: String },
