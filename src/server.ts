@@ -4,6 +4,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
+// for business logic backend
 import authBusinessRoute from "./auth/routes/authBusinessRoute";
 import authBusinessStaffRoute from "./auth/routes/authBusinessStaffRoute";
 import appointmentRoute from "./appointment/routes/appointmentRoute";
@@ -11,6 +12,10 @@ import serviceRoute from "./businessService/routes/serviceRoute";
 import staffWorkTimesheetRoute from "./staffWork/routes/staffWorkTimesheetRoute";
 import businessWorkTimesheetRoute from "./staffWork/routes/businessWorkTimesheetRoute";
 import loyaltyRoute from "./loyalty/routes/loyaltyRoute";
+
+// for data analytics backend
+import appointmentAnalyticsRoute from "./analytics/appointment/route/appointmentAnalyticRoute";
+import staffWorkTimesheetAnalyticsRoute from "./analytics/staffWorkTimesheet/route/staffWorkTimesheetAnalyticRoute";
 
 // define local port
 const PORT = 8000;
@@ -56,6 +61,7 @@ app.get("/healthcheck", async (req: Request, res: Response) => {
     res.json({ message: "Health check passed" });
 });
 
+// for business logic backend
 app.use("/auth/business", authBusinessRoute);
 app.use("/auth/staff", authBusinessStaffRoute);
 app.use("/appointment", appointmentRoute);
@@ -64,6 +70,11 @@ app.use("/timesheet", staffWorkTimesheetRoute);
 app.use("/timesheet", businessWorkTimesheetRoute);
 app.use("/loyalty", loyaltyRoute);
 
+// for data analytics backend
+app.use("/analytics/appointment", appointmentAnalyticsRoute);
+app.use("/analytics/staff-work-timesheet", staffWorkTimesheetAnalyticsRoute);
+
+// start the server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
