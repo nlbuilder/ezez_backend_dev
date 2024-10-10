@@ -7,8 +7,12 @@ import { validateBusinessUpdateRequest } from "../middleware/validation";
 const router = express.Router();
 
 router.post("/", businessController.createBusinessInfo);
-router.get("/", businessController.getBusinessInfo);
-router.get("/staffs", businessController.getBusinessStaffInfoForBusiness);
+router.get("/", jwtParse, businessController.getBusinessInfo);
+router.get(
+    "/staffs",
+    jwtParse,
+    businessController.getBusinessStaffInfoForBusiness
+);
 router.put(
     "/",
     jwtParse,

@@ -10,10 +10,9 @@ export interface IBusinessInfo {
     country?: string;
     phoneNumber?: string;
     email: string;
-    altEmail?: string;
     logoURL?: string;
     description?: string;
-    managerName?: string;
+    managerName?: string[];
 }
 
 // def an interface for businessStaffInfo
@@ -30,7 +29,6 @@ export interface IBusinessStaffInfo {
     country?: string;
     phoneNumber: string;
     email?: string;
-    altEmail?: string;
     photoURL?: string;
     role?: string;
 }

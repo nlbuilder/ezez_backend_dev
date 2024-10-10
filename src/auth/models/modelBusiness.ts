@@ -38,9 +38,9 @@ const businessInfoSchema = new Schema<IBusinessInfo>({
 });
 
 // create models for the schemas
-const BusinessInfo = model<IBusinessInfo>("business_info", businessInfoSchema);
+const BusinessInfo = model<IBusinessInfo>("business_infos", businessInfoSchema);
 const BusinessStaffInfo = model<IBusinessStaffInfo>(
-    "business_staff_info",
+    "business_staff_infos",
     businessStaffInfoSchema
 );
 
