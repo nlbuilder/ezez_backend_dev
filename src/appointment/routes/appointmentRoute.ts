@@ -6,7 +6,7 @@ import { jwtParse } from "../../auth/middleware/auth";
 const router = express.Router();
 
 router.post("/", jwtParse, appointmentController.createAppointment);
-router.get("/", jwtParse, appointmentController.getAppointmentInfo);
+router.get("/", jwtParse, appointmentController.getAllAppointmentsInfo);
 router.put("/", jwtParse, appointmentController.updateAppointmentInfo);
 router.delete("/", jwtParse, appointmentController.deleteAppointment);
 

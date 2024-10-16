@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 // for business logic backend
 import authBusinessRoute from "./auth/routes/authBusinessRoute";
+import authBusinessStaffForBusinessRoute from "./auth/routes/authBusinessStaffForBusinessRoute";
 import authBusinessStaffRoute from "./auth/routes/authBusinessStaffRoute";
 import appointmentRoute from "./appointment/routes/appointmentRoute";
 import serviceRoute from "./businessService/routes/serviceRoute";
@@ -63,7 +64,8 @@ app.get("/healthcheck", async (req: Request, res: Response) => {
 
 // for business logic backend
 app.use("/auth/business", authBusinessRoute);
-app.use("/auth/staff", authBusinessStaffRoute);
+app.use("/auth/staff/forBusiness", authBusinessStaffForBusinessRoute);
+app.use("/auth/staff/forStaff", authBusinessStaffRoute);
 app.use("/appointment", appointmentRoute);
 app.use("/service", serviceRoute);
 app.use("/timesheet", staffWorkTimesheetRoute);

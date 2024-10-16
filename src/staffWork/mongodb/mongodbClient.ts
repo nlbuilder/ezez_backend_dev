@@ -8,4 +8,4 @@ const MONGODB_CONNECTION_STRING =
 export const client = new MongoClient(MONGODB_CONNECTION_STRING);
 
 // connect to the Staff_work_management_DB database
-export const staffWorkManagementDB = client.db("Staff_work_management_DB");
+export const staffWorkManagementDB = client.db("Staff_work_timesheet_DB");

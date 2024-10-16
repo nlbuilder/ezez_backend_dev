@@ -3,12 +3,10 @@ import "dotenv/config";
 
 import { client } from "../mongodb/mongodbClient";
 import { businessDB } from "../mongodb/mongodbClient";
+import { getAuth } from "firebase-admin/auth";
 
 // def a reference to the business_info collection
 const businessInfo = businessDB.collection("business_info");
-
-// def a reference to the business_staff_info collection
-const businessStaffInfo = businessDB.collection("business_staff_info");
 
 // def a function to create a new business
 const createBusinessInfo = async (req: Request, res: Response) => {
@@ -76,55 +74,10 @@ const getBusinessInfo = async (req: Request, res: Response) => {
     }
 };
 
-// def a function to get all staff info working for a business
-const getBusinessStaffInfoForBusiness = async (req: Request, res: Response) => {
-    try {
-        const businessId = req.headers["business-id"];
-
-        // validate headers
-        if (!businessId) {
-            console.log("businessId is required");
-
-            return res.status(400).json({ message: "There is sort of error" });
-        }
-
-        // check if the businessId exists
-        const staffs = await businessStaffInfo.find({ businessId }).toArray(); // convert the cursor to an array
-
-        // I need to use the toArray method here because
-        // I applied the native MongdoDB driver with MongoClient
-        // to connect to the MongoDB database, so that
-        // I directly work with  a Collection<DOCUMENT> object
-        // instead of a Mongoose Model object.
-
-        // The toArray method returns a promise making it an async operation
-        // (i.e., it returns a Promise<DOCUMENT[]>) to use async/await here
-        // if not using the toArray method,
-        // the find method returns a Cursor<DOCUMENT> object
-        // which is not a promise, so I can't use async/await here.
-
-        // key point: - MongoDB Model returns a promise-based object
-        //            - MongoDB Collection returns a cursor-based object
-
-        // check if the staff exists
-
-        if (staffs.length === 0) {
-            console.log("No staff found for the given businessId");
-
-            return res.status(404).json({ message: "staff not found" });
-        }
-
-        res.status(200).json(staffs);
-    } catch (error) {
-        console.log("Error in getBusinessInfo: ", error); // log the error for debugging purposes
-        res.status(500).json({ message: "There is sort of error" });
-    }
-};
-
 // def a function to update business info
 const updateBusinessInfo = async (req: Request, res: Response) => {
     try {
-        if (req.body.role !== "staff") {
+        if (req.body.role === "staff") {
             return;
         }
 
@@ -147,7 +100,7 @@ const updateBusinessInfo = async (req: Request, res: Response) => {
             zip,
             country,
             phoneNumber,
-            // email,
+            email,
             logoURL,
             description,
             managerName,
@@ -166,7 +119,7 @@ const updateBusinessInfo = async (req: Request, res: Response) => {
                     zip,
                     country,
                     phoneNumber,
-                    // altEmail: email,
+                    email,
                     logoURL,
                     description,
                     managerName,
@@ -192,13 +145,10 @@ const updateBusinessInfo = async (req: Request, res: Response) => {
     }
 };
 
-// use to count the number of businesses will be deleted
-const businessIdToDelete = 1;
-
 // def a function to delete business
 const deleteBusiness = async (req: Request, res: Response) => {
     try {
-        const businessId = req.headers["business-id"];
+        const businessId = req.headers["business-id"] as string;
 
         // validate headers
         if (!businessId) {
@@ -219,67 +169,98 @@ const deleteBusiness = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "There is sort of error" });
         }
 
-        // connect to the MongoDB
-        await client.connect();
+        // check Business_service_DB database
+        // connect to the Business_service_DB database
+        const businessServiceDB = client.db("Business_service_DB");
 
-        // Get list of databases
-        const adminDb = client.db().admin();
-        const databases = await adminDb.listDatabases();
+        // def a reference to the business_service_info collection
+        const businessServiceInfo = businessServiceDB.collection(
+            "business_service_info"
+        );
 
-        for (const dbInfo of databases.databases) {
-            const dbName = dbInfo.name;
-            const db = client.db(dbName);
+        // check and delete everything related to the businessId in the business_service_info collection
+        const deleteBusinessServiceInfo = await businessServiceInfo.deleteMany({
+            businessId,
+        });
 
-            // Get list of collections in the database
-            const collections = await db.listCollections().toArray();
-
-            for (const collectionInfo of collections) {
-                const collectionName = collectionInfo.name;
-
-                // Delete documents where businessId matches the specified value
-                const result = await db
-                    .collection(collectionName)
-                    .deleteMany({ businessId: businessIdToDelete });
-                console.log(
-                    `Deleted ${result.deletedCount} documents from ${dbName}.${collectionName}`
-                );
-            }
-        }
-
-        // check if the businessId exists in any of the collections
-        let businessIdExists = false;
-        for (const dbInfo of databases.databases) {
-            const dbName = dbInfo.name;
-            const db = client.db(dbName);
-
-            // Get list of collections in the database
-            const collections = await db.listCollections().toArray();
-
-            for (const collectionInfo of collections) {
-                const collectionName = collectionInfo.name;
-
-                // Check if any document with the businessId still exists
-                const count = await db
-                    .collection(collectionName)
-                    .countDocuments({ businessId: businessIdToDelete });
-                if (count > 0) {
-                    businessIdExists = true;
-                    console.log(
-                        `BusinessId ${businessIdToDelete} still exists in ${dbName}.${collectionName}`
-                    );
-                }
-            }
-        }
-
-        if (!businessIdExists) {
+        // check deleteBusinessServiceInfo
+        if (!deleteBusinessServiceInfo) {
             console.log(
-                `BusinessId ${businessIdToDelete} does not exist in any collection across all databases.`
+                "can't execute the businessServiceInfo.deleteMany successfully"
             );
-        } else {
-            console.log(
-                `BusinessId ${businessIdToDelete} still exists in some collections across the databases.`
-            );
+
+            return res.status(500).json({ message: "There is sort of error" });
         }
+
+        // check Appointment_DB database
+        // connect to the Appointment_DB database
+        const appointmentDB = client.db("Appointment_DB");
+
+        // def a reference to the appointment_info collection
+        const appointmentInfo = appointmentDB.collection("appointment_info");
+
+        // check and delete everything related to the businessId in the appointment_info collection
+        const deleteAppointmentInfo = await appointmentInfo.deleteMany({
+            businessId,
+        });
+
+        // check deleteAppointmentInfo
+        if (!deleteAppointmentInfo) {
+            console.log(
+                "can't execute the appointmentInfo.deleteMany successfully"
+            );
+
+            return res.status(500).json({ message: "There is sort of error" });
+        }
+
+        // check Staff_work_timesheet_DB database
+        // connect to the Staff_work_timesheet_DB database
+        const staffWorkTimeSheetDB = client.db("Staff_work_timesheet_DB");
+
+        // def a reference to the daily_staff_work_timesheet collection
+        const dailyStaffWorkTimeSheet = staffWorkTimeSheetDB.collection(
+            "daily_staff_work_timesheet"
+        );
+
+        // check and delete everything related to the businessId in the daily_staff_work_timesheet collection
+        const deleteDailyStaffWorkTimeSheet =
+            await dailyStaffWorkTimeSheet.deleteMany({
+                businessId,
+            });
+
+        // check deleteDailyStaffWorkTimeSheet
+        if (!deleteDailyStaffWorkTimeSheet) {
+            console.log(
+                "can't execute the dailyStaffWorkTimeSheet.deleteMany successfully"
+            );
+
+            return res.status(500).json({ message: "There is sort of error" });
+        }
+
+        // check Business_DB database
+        // check and delete everything related to the businessId in the business_info collection
+        const deleteBusinessInfo = await businessInfo.deleteOne({
+            businessId,
+        });
+
+        // check deleteBusinessInfo
+        if (!deleteBusinessInfo) {
+            console.log(
+                "can't execute the businessInfo.deleteOne successfully"
+            );
+
+            return res.status(500).json({ message: "There is sort of error" });
+        }
+
+        // check and delete user from firebase
+        getAuth()
+            .deleteUser(businessId)
+            .then(() => {
+                console.log("Successfully deleted user");
+            })
+            .catch((error) => {
+                console.log("Error deleting user:", error);
+            });
 
         // send a success message to the client
         res.status(200).json({ message: "Business deleted successfully" });
@@ -292,7 +273,6 @@ const deleteBusiness = async (req: Request, res: Response) => {
 export default {
     createBusinessInfo,
     getBusinessInfo,
-    getBusinessStaffInfoForBusiness,
     updateBusinessInfo,
     deleteBusiness,
 };

@@ -11,6 +11,7 @@ export interface IAppointmentInfo {
     serviceId: string;
     date: Date;
     time: ITime; // e.g., { hours: 14, minutes: 30 }
+    roundedTime: ITime; // e.g., { hours: 15, minutes: 0 }
     numberOfCustomers: number;
     serviceName: string;
     customerPhoneNumber: string;

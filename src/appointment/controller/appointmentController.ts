@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import "dotenv/config";
 
+import { roundTime1 } from "../utils/utils";
 import { appointmentDB } from "../mongodb/mongodbClient";
 
 // def a reference to the appointment_info collection
@@ -16,11 +17,13 @@ const createAppointment = async (req: Request, res: Response) => {
             serviceId,
             date,
             time,
-            numberOfCustomers,
+            roundedTime,
             serviceName,
+            numberOfCustomers,
             customerPhoneNumber,
+            customerName,
+            note,
             status,
-            notes,
         } = await req.body;
 
         // validate the request body
@@ -32,7 +35,7 @@ const createAppointment = async (req: Request, res: Response) => {
             !date ||
             !time ||
             !numberOfCustomers ||
-            !serviceName ||
+            !serviceId ||
             !customerPhoneNumber ||
             !status
         ) {
@@ -51,11 +54,13 @@ const createAppointment = async (req: Request, res: Response) => {
                     serviceId,
                     date,
                     time,
-                    numberOfCustomers,
+                    roundedTime,
                     serviceName,
+                    numberOfCustomers,
                     customerPhoneNumber,
+                    customerName,
+                    note,
                     status,
-                    notes,
                 },
             },
             { upsert: true, returnDocument: "after" }
@@ -79,7 +84,7 @@ const createAppointment = async (req: Request, res: Response) => {
 
 // def a function to get appointment info
 // this function retrieves all appointments for the specified businessId
-const getAppointmentInfo = async (req: Request, res: Response) => {
+const getAllAppointmentsInfo = async (req: Request, res: Response) => {
     try {
         const businessId = req.headers["business-id"] as string;
 
@@ -114,7 +119,7 @@ const getAppointmentInfo = async (req: Request, res: Response) => {
         if (appointments.length === 0) {
             console.log("No appointments found for the specified businessId");
 
-            return res.status(500).json({ message: "no appointment found" });
+            return res.status(404).json({ message: "no appointment found" });
         }
 
         res.status(200).json(appointments);
@@ -209,7 +214,7 @@ const deleteAppointment = async (req: Request, res: Response) => {
 
 export default {
     createAppointment,
-    getAppointmentInfo,
+    getAllAppointmentsInfo,
     updateAppointmentInfo,
     deleteAppointment,
 };

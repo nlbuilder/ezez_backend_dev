@@ -9,6 +9,7 @@ const appointmentInfoSchema = new Schema<IAppointmentInfo>({
     serviceId: { type: String, required: true },
     date: { type: Date, required: true },
     time: { type: String, required: true },
+    roundedTime: { type: String, required: true },
     numberOfCustomers: { type: Number, required: true, default: 1 },
     serviceName: { type: String, required: true },
     customerPhoneNumber: { type: String, required: true },

@@ -88,7 +88,7 @@ const getServiceInfo = async (req: Request, res: Response) => {
 };
 
 // def a function to get all services for the given businessId
-const getAllServices = async (req: Request, res: Response) => {
+const getAllServicesInfo = async (req: Request, res: Response) => {
     try {
         const businessId = req.headers["business-id"];
 
@@ -120,7 +120,7 @@ const getAllServices = async (req: Request, res: Response) => {
         //            - MongoDB Collection returns a cursor-based object
 
         // check the existance of the services
-        if (!allServices) {
+        if (!allServices || allServices.length === 0) {
             console.log("no service not found for the given businessId");
 
             return res.status(404).json({ message: "services not found" });
@@ -216,7 +216,7 @@ const deleteService = async (req: Request, res: Response) => {
 export default {
     createService,
     getServiceInfo,
-    getAllServices,
+    getAllServicesInfo,
     updateServiceInfo,
     deleteService,
 };

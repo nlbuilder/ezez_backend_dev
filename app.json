@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "backend",
+    "slug": "backend",
+    "version": "1.0.0",
+    "description": "https://www.figma.com/board/1UTfcd2WZKPTtpfYzfFXfx/Backend-code-base-structure-0?node-id=0-1&t=O6nudzH0jvMknP15-1",
+    "sdkVersion": "48.0.0",
+    "platforms": []
+  }
+}
