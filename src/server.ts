@@ -13,6 +13,7 @@ import serviceRoute from "./businessService/routes/serviceRoute";
 import staffWorkTimesheetRoute from "./staffWork/routes/staffWorkTimesheetRoute";
 import businessWorkTimesheetRoute from "./staffWork/routes/businessWorkTimesheetRoute";
 import loyaltyRoute from "./loyalty/routes/loyaltyRoute";
+import businessHourRoute from "./businessHours/routes/businessHoursRoute";
 
 // for data analytics backend
 import appointmentAnalyticsRoute from "./analytics/appointment/route/appointmentAnalyticRoute";
@@ -71,6 +72,7 @@ app.use("/service", serviceRoute);
 app.use("/timesheet", staffWorkTimesheetRoute);
 app.use("/timesheet", businessWorkTimesheetRoute);
 app.use("/loyalty", loyaltyRoute);
+app.use("/businessHour", businessHourRoute);
 
 // for data analytics backend
 app.use("/analytics/appointment", appointmentAnalyticsRoute);

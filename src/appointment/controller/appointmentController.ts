@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import "dotenv/config";
 
-import { roundTime1 } from "../utils/utils";
 import { appointmentDB } from "../mongodb/mongodbClient";
 
 // def a reference to the appointment_info collection
@@ -24,7 +23,7 @@ const createAppointment = async (req: Request, res: Response) => {
             customerName,
             note,
             status,
-        } = await req.body;
+        } = req.body;
 
         // validate the request body
         if (
@@ -117,7 +116,7 @@ const getAllAppointmentsInfo = async (req: Request, res: Response) => {
 
         // check if no appointments were found
         if (appointments.length === 0) {
-            console.log("No appointments found for the specified businessId");
+            // console.log("No appointments found for the specified businessId");
 
             return res.status(404).json({ message: "no appointment found" });
         }
@@ -132,12 +131,10 @@ const getAllAppointmentsInfo = async (req: Request, res: Response) => {
 // def a function to update appointment info
 const updateAppointmentInfo = async (req: Request, res: Response) => {
     try {
-        if (req.body.role !== "staff") {
-            return;
-        }
+        const { appointmentId, businessId, ...updateFields } = req.body;
 
-        const businessId = req.headers["business-id"];
-        const appointmentId = req.headers["appointment-id"];
+        console.log("updateFields: ", updateFields);
+        console.log("appointmentId: ", appointmentId);
 
         // validate the businessId and appointmentId
         if (!businessId || !appointmentId) {
@@ -151,7 +148,7 @@ const updateAppointmentInfo = async (req: Request, res: Response) => {
             { businessId, appointmentId },
             {
                 $set: {
-                    ...req.body,
+                    ...updateFields,
                 },
             },
             { returnDocument: "after" }
@@ -176,10 +173,6 @@ const updateAppointmentInfo = async (req: Request, res: Response) => {
 // def a function to delete appointment info
 const deleteAppointment = async (req: Request, res: Response) => {
     try {
-        if (req.body.role !== "staff") {
-            return;
-        }
-
         const businessId = req.headers["business-id"];
         const appointmentId = req.headers["appointment-id"];
 
@@ -197,7 +190,7 @@ const deleteAppointment = async (req: Request, res: Response) => {
         });
 
         // check if the deletion wasn't successful
-        if (!deleteAppointment || !deleteAppointment.value) {
+        if (!deleteAppointment) {
             console.log(
                 "Error when executing appointmentInfo.findOneAndDelete() successfully"
             );

@@ -39,7 +39,9 @@ const createService = async (req: Request, res: Response) => {
 
         // check the existance of the service after executing the findOneAndUpdate
         if (!service) {
-            console.log("Error when executing findOneAndUpdate() for service");
+            console.log(
+                "Error when executing findOneAndUpdate() for createService() "
+            );
 
             return res.status(200).send({ message: "There is sort of error" });
         }
@@ -121,9 +123,9 @@ const getAllServicesInfo = async (req: Request, res: Response) => {
 
         // check the existance of the services
         if (!allServices || allServices.length === 0) {
-            console.log("no service not found for the given businessId");
+            console.log("no service found for the given businessId");
 
-            return res.status(404).json({ message: "services not found" });
+            return res.status(404).json({ message: "There is sort of error" });
         }
 
         res.status(200).json(allServices);

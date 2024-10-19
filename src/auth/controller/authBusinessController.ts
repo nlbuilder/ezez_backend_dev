@@ -238,6 +238,21 @@ const deleteBusiness = async (req: Request, res: Response) => {
         }
 
         // check Business_DB database
+        // check and delete everything related to the businessId in the business_hour_info collection
+        const businessHourInfo = businessDB.collection("business_hour_info");
+        const deleteBusinessHourInfo = await businessHourInfo.deleteMany({
+            businessId,
+        });
+
+        // check deleteBusinessHourInfo
+        if (!deleteBusinessHourInfo) {
+            console.log(
+                "can't execute the businessHourInfo.deleteMany successfully"
+            );
+
+            return res.status(500).json({ message: "There is sort of error" });
+        }
+
         // check and delete everything related to the businessId in the business_info collection
         const deleteBusinessInfo = await businessInfo.deleteOne({
             businessId,
