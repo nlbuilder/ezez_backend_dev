@@ -1,0 +1,35 @@
+[
+    {
+        "option": "option0",
+        "details": [
+            { "serviceName": "Service0", "price": 99 },
+            { "serviceName": "Service1", "price": 99 },
+            { "serviceName": "Service2", "price": 99 },
+            { "serviceName": "Service3", "price": 99 },
+            { "serviceName": "Service4", "price": 99 },
+            { "serviceName": "Service5", "price": 99 }
+        ]
+    },
+    {
+        "option": "option1",
+        "details": [
+            { "serviceName": "Service0", "price": 99 },
+            { "serviceName": "Service1", "price": 99 },
+            { "serviceName": "Service2", "price": 99 },
+            { "serviceName": "Service3", "price": 99 },
+            { "serviceName": "Service4", "price": 99 },
+            { "serviceName": "Service5", "price": 99 }
+        ]
+    },
+    {
+        "option": "option2",
+        "details": [
+            { "serviceName": "Service6", "price": 99 },
+            { "serviceName": "Service7", "price": 99 },
+            { "serviceName": "Service8", "price": 99 },
+            { "serviceName": "Service9", "price": 99 },
+            { "serviceName": "Service10", "price": 99 },
+            { "serviceName": "Service11", "price": 99 }
+        ]
+    }
+]

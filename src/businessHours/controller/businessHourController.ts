@@ -11,6 +11,10 @@ const createBusinessHour = async (req: Request, res: Response) => {
     try {
         const { businessId, startTime, finishTime } = await req.body;
 
+        console.log("businessId: ", businessId);
+        console.log("startTime: ", startTime);
+        console.log("finishTime: ", finishTime);
+
         // validate the request body
         if (!businessId || !startTime || !finishTime) {
             console.log("Missing required fields");

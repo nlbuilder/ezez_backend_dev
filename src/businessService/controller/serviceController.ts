@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import "dotenv/config";
+import { v4 as uuidv4 } from "uuid";
 
 import { businessServiceDB } from "../mongodb/mongodbClient";
+import initServices from "../../init/initServices.json";
 
 // def a reference to the business_service_info collection
 const businessServiceInfo = businessServiceDB.collection(
@@ -49,6 +51,59 @@ const createService = async (req: Request, res: Response) => {
         return res.status(201).send({ message: "service created" });
     } catch (error) {
         console.log("Error in createService: ", error); // log the error for debugging purposes
+
+        res.status(500).json({ message: "There is sort of error" });
+    }
+};
+
+// def a function to create multiple services for the given businessId
+const createInitServices = async (req: Request, res: Response) => {
+    try {
+        const { businessId, chosenOption } = req.body;
+
+        // validate the request body
+        if (!businessId || !chosenOption) {
+            console.log("Missing required fields");
+
+            return res.status(400).json({ message: "There is sort of error" });
+        }
+
+        // filter the matching option from initServiceInfo
+        const selectedOption = initServices.find(
+            (option) => option.option === chosenOption
+        );
+
+        if (!selectedOption) {
+            return res.status(404).json({ message: "Option not found" });
+        }
+
+        console.log(`Selected Option: ${JSON.stringify(selectedOption)}`);
+
+        // Loop through the selected option's details and create services
+        for (const serviceDetail of selectedOption.details) {
+            const { serviceName, price } = serviceDetail;
+
+            const service = await businessServiceInfo.findOneAndUpdate(
+                { businessId, serviceName }, // Ensure uniqueness by businessId and serviceName
+                {
+                    $setOnInsert: {
+                        businessId,
+                        serviceId: uuidv4(),
+                        serviceName,
+                        photoUrl: "",
+                        price,
+                        note: "",
+                    },
+                },
+                { upsert: true, returnDocument: "after" }
+            );
+
+            // console.log(`Service Created/Updated: ${JSON.stringify(service)}`);
+        }
+
+        return res.status(201).send({ message: "doing" });
+    } catch (error) {
+        console.log("Error in createMultipleServices: ", error); // log the error for debugging purposes
 
         res.status(500).json({ message: "There is sort of error" });
     }
@@ -217,6 +272,7 @@ const deleteService = async (req: Request, res: Response) => {
 
 export default {
     createService,
+    createInitServices,
     getServiceInfo,
     getAllServicesInfo,
     updateServiceInfo,
