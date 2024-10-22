@@ -77,8 +77,6 @@ const createInitServices = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "Option not found" });
         }
 
-        console.log(`Selected Option: ${JSON.stringify(selectedOption)}`);
-
         // Loop through the selected option's details and create services
         for (const serviceDetail of selectedOption.details) {
             const { serviceName, price } = serviceDetail;
