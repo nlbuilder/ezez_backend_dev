@@ -173,8 +173,6 @@ const getBusinessStaffInfoForBusiness = async (req: Request, res: Response) => {
         // check if the staff exists
 
         if (staffs.length === 0) {
-            console.log("No staff found for the given businessId");
-
             return res.status(404).json({ message: "staff not found" });
         }
 

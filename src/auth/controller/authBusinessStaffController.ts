@@ -22,8 +22,6 @@ const getBusinessStaffInfo = async (req: Request, res: Response) => {
 
         // validate headers
         if (!businessStaffId) {
-            console.log("businessStaffId is required");
-
             return res.status(400).json({ message: "There is sort of error" });
         }
 
@@ -35,8 +33,6 @@ const getBusinessStaffInfo = async (req: Request, res: Response) => {
         // this trick is used to handle the case
         // where there is no staff added to the business yet
         if (!staff) {
-            console.log("No staff found");
-
             return res.status(404).json({ message: "staff not found" });
         }
 

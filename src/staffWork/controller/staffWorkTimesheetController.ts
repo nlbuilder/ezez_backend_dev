@@ -59,9 +59,9 @@ const createDailyStaffWorkTimesheet = async (req: Request, res: Response) => {
 
         // check the execution of the findOneAndUpdate
         if (!dailyWorkTimesheet) {
-            console.log(
-                "can't execute dailyStaffWorkTimesheet.findOneAndUpdate() successfully"
-            );
+            // console.log(
+            //     "can't execute dailyStaffWorkTimesheet.findOneAndUpdate() successfully"
+            // );
 
             return res.status(200).send({ message: "There is sort of error" });
         }
@@ -105,7 +105,7 @@ const getDailyStaffWorkTimesheet = async (req: Request, res: Response) => {
         });
 
         if (!dailyWorkTimesheet) {
-            console.log("Daily work timesheet not found");
+            // console.log("Daily work timesheet not found");
 
             return res
                 .status(404)
@@ -173,7 +173,7 @@ const getWeeklyStaffWorkTimesheetForStaff = async (
         //            - MongoDB Collection returns a cursor-based object
 
         if (!weeklyWorkTimesheet) {
-            console.log("weekly work timesheet not found");
+            // console.log("weekly work timesheet not found");
 
             return res
                 .status(404)

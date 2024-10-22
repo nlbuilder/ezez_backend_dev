@@ -116,8 +116,6 @@ const getServiceInfo = async (req: Request, res: Response) => {
 
         // validate headers
         if (!businessId || !serviceId) {
-            console.log("businessId and serviceId are required");
-
             return res.status(400).json({ message: "There is sort of error" });
         }
 
@@ -129,8 +127,6 @@ const getServiceInfo = async (req: Request, res: Response) => {
 
         // check the existance of the service
         if (!serviceInfo) {
-            console.log("service not found");
-
             return res.status(404).json({ message: "service not found" });
         }
 
@@ -175,8 +171,8 @@ const getAllServicesInfo = async (req: Request, res: Response) => {
         //            - MongoDB Collection returns a cursor-based object
 
         // check the existance of the services
-        if (!allServices || allServices.length === 0) {
-            console.log("no service found for the given businessId");
+        if (allServices.length === 0) {
+            // console.log("allServices: ", allServices);
 
             return res.status(404).json({ message: "There is sort of error" });
         }

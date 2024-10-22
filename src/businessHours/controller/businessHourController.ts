@@ -81,9 +81,8 @@ const getBusinessHourInfo = async (req: Request, res: Response) => {
         //            - MongoDB Collection returns a cursor-based object
 
         // check the existance of the services
-        if (!businessHour || businessHour.length === 0) {
-            console.log("no businessHour found for the given businessId");
-
+        if (businessHour.length === 0) {
+            // console.log("businessHour: ", businessHour);
             return res.status(404).json({ message: "There is sort of error" });
         }
 

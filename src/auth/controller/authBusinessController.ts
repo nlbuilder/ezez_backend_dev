@@ -62,8 +62,6 @@ const getBusinessInfo = async (req: Request, res: Response) => {
 
         // check if the business exists
         if (!business) {
-            console.log("Business not found");
-
             return res.status(404).json({ message: "business not found" });
         }
 
@@ -85,8 +83,6 @@ const updateBusinessInfo = async (req: Request, res: Response) => {
 
         // validate headers
         if (!businessId) {
-            console.log("businessId is required");
-
             return res.status(400).json({ message: "There is sort of error" });
         }
 
@@ -152,8 +148,6 @@ const deleteBusiness = async (req: Request, res: Response) => {
 
         // validate headers
         if (!businessId) {
-            console.log("businessId is required");
-
             return res.status(400).json({ message: "There is sort of error" });
         }
 

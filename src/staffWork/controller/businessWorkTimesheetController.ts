@@ -100,9 +100,9 @@ const getDailyAllWorkTimesheetsForBusiness = async (
         //            - MongoDB Collection returns a cursor-based object
 
         if (!dailyWorkTimesheets) {
-            console.log(
-                "Daily work timesheets not found for the given business"
-            );
+            // console.log(
+            //     "Daily work timesheets not found for the given business"
+            // );
 
             return res.status(404).json({
                 message: "daily work timesheets not found",
@@ -166,7 +166,7 @@ const getWeeklyAllWorkTimesheetForBusiness = async (
         //            - MongoDB Collection returns a cursor-based object
 
         if (!weeklyWorkTimesheet) {
-            console.log("weekly work timesheet not found");
+            // console.log("weekly work timesheet not found");
 
             return res
                 .status(404)
