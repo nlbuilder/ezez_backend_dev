@@ -115,7 +115,7 @@ const getAllAppointmentsInfo = async (req: Request, res: Response) => {
         //            - MongoDB Collection returns a cursor-based object
 
         // check if no appointments were found
-        if (appointments.length == 0) {
+        if (appointments.length === 0) {
             // console.log("appointments: ", appointments);
             return res.status(404).json({ message: "no appointment found" });
         }
