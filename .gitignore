@@ -5,7 +5,7 @@
 node_modules/
 
 # ignore the build directory
-# build
+/dist
 
 # ignore the .gitignore file
 # .gitignore

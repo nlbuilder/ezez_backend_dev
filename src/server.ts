@@ -27,8 +27,7 @@ const FRONTEND_URL_DEV = process.env.FRONTEND_URL_DEV as string;
 const FRONTEND_URL_PRO = process.env.FRONTEND_URL_PRO as string;
 
 // define the MongoDB connection URL
-const MONGODB_CONNECTION_STRING =
-    process.env.MONGODB_CONNECTION_URL || "mongodb://localhost:27017";
+const MONGODB_CONNECTION_STRING = process.env.MONGODB_CONNECTION_URL as string;
 
 // connect to MongoDB
 mongoose.connect(MONGODB_CONNECTION_STRING);
