@@ -132,9 +132,6 @@ const updateAppointmentInfo = async (req: Request, res: Response) => {
     try {
         const { appointmentId, businessId, ...updateFields } = req.body;
 
-        console.log("updateFields: ", updateFields);
-        console.log("appointmentId: ", appointmentId);
-
         // validate the businessId and appointmentId
         if (!businessId || !appointmentId) {
             console.log("businessId and appointmentId are required");
