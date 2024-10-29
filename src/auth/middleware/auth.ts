@@ -41,7 +41,7 @@ export const jwtParse = async (
 
         next();
     } catch (error) {
-        console.error("Error parsing JWT:", error); // log the error for debugging purposes in the backend
+        console.error("Error parsing JWT [jwtParse error message]:", error); // log the error for debugging purposes in the backend
         // if the token is invalid, return a 401 response to the client
         res.status(401).json({ message: "Access Denied" });
     }

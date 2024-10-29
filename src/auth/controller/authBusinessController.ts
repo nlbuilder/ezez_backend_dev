@@ -11,11 +11,19 @@ const businessInfo = businessDB.collection("business_info");
 // def a function to create a new business
 const createBusinessInfo = async (req: Request, res: Response) => {
     try {
-        const { businessId, name, email } = await req.body;
+        const {
+            businessId,
+            email,
+            // , name
+        } = await req.body;
 
         // validate the request body
-        if (!businessId || !name || !email) {
-            console.log("businessId, name and email are required");
+        if (
+            !businessId ||
+            !email
+            // || !name
+        ) {
+            console.log("missing required fields");
 
             return res.status(400).json({ message: "There is sort of error" });
         }
@@ -23,7 +31,13 @@ const createBusinessInfo = async (req: Request, res: Response) => {
         // check if the business already exists else create a new one using findOneAndUpdate
         const business = await businessInfo.findOneAndUpdate(
             { businessId },
-            { $setOnInsert: { businessId, name, email } },
+            {
+                $setOnInsert: {
+                    businessId,
+                    email,
+                    // , name
+                },
+            },
             { upsert: true, returnDocument: "after" }
         );
 
@@ -37,7 +51,9 @@ const createBusinessInfo = async (req: Request, res: Response) => {
         }
 
         // send a success message to the client
-        res.status(201).json({ message: "Business created successfully" });
+        res.status(201).json({
+            message: "Business created successfully [backend message]",
+        });
     } catch (error) {
         console.log("Error in createBusiness: ", error); // log the error for debugging purposes
 
