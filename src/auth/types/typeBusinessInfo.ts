@@ -15,6 +15,7 @@ export interface IBusinessInfo {
     managerName?: string[];
     listOfStaff: IBusinessStaffInfoBrief[];
     capacity?: number;
+    role: string;
 }
 
 export interface IBusinessStaffInfoBrief {

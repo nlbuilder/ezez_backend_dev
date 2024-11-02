@@ -33,6 +33,7 @@ const businessInfoSchema = new Schema<IBusinessInfo>({
     managerName: { type: String },
     listOfStaff: { type: [businessStaffInfoBriefSchema], default: [] },
     capacity: { type: Number },
+    role: { type: String, required: true },
 });
 
 // def a schema for businessUserInfo

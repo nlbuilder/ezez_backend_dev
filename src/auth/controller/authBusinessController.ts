@@ -15,13 +15,15 @@ const createBusinessInfo = async (req: Request, res: Response) => {
             businessId,
             email,
             // , name
+            role,
         } = await req.body;
 
         // validate the request body
         if (
             !businessId ||
-            !email
+            !email ||
             // || !name
+            !role
         ) {
             console.log("missing required fields");
 
@@ -36,6 +38,7 @@ const createBusinessInfo = async (req: Request, res: Response) => {
                     businessId,
                     email,
                     // , name
+                    role,
                 },
             },
             { upsert: true, returnDocument: "after" }

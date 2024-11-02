@@ -27,8 +27,6 @@ const createAppointment = async (req: Request, res: Response) => {
             status,
         } = req.body;
 
-        console.log("req.body: ", req.body);
-
         // validate the request body
         if (
             !appointmentId ||
