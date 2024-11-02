@@ -14,8 +14,10 @@ const createAppointment = async (req: Request, res: Response) => {
             businessId,
             customerId,
             serviceId,
-            date,
-            time,
+            dateString,
+            dateDate,
+            timeString,
+            timeDate,
             roundedTime,
             serviceName,
             numberOfCustomers,
@@ -25,14 +27,18 @@ const createAppointment = async (req: Request, res: Response) => {
             status,
         } = req.body;
 
+        console.log("req.body: ", req.body);
+
         // validate the request body
         if (
             !appointmentId ||
             !businessId ||
             !customerId ||
             !serviceId ||
-            !date ||
-            !time ||
+            !dateString ||
+            !dateDate ||
+            !timeString ||
+            !timeDate ||
             !numberOfCustomers ||
             !serviceId ||
             !customerPhoneNumber ||
@@ -51,8 +57,10 @@ const createAppointment = async (req: Request, res: Response) => {
                     businessId,
                     customerId,
                     serviceId,
-                    date,
-                    time,
+                    dateString,
+                    dateDate,
+                    timeString,
+                    timeDate,
                     roundedTime,
                     serviceName,
                     numberOfCustomers,

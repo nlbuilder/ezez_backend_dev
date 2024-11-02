@@ -9,8 +9,10 @@ export interface IAppointmentInfo {
     businessId: string;
     customerId: string;
     serviceId: string;
-    date: Date;
-    time: ITime; // e.g., { hours: 14, minutes: 30 }
+    dateString: string;
+    dateDate: Date;
+    timeString: ITime; // e.g., { hours: 14, minutes: 30 }
+    timeDate: Date;
     roundedTime: ITime; // e.g., { hours: 15, minutes: 0 }
     numberOfCustomers: number;
     serviceName: string;
