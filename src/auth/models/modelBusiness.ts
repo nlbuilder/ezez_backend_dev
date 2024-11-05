@@ -16,10 +16,10 @@ const businessStaffInfoBriefSchema = new Schema<IBusinessStaffInfoBrief>({
     role: { type: String, required: true },
 });
 
-// def a schema for businessInfo
-const businessInfoSchema = new Schema<IBusinessInfo>({
-    businessId: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
+// def a schema for businessBranchInfo
+const businessBranchInfoSchema = new Schema({
+    businessBranchName: { type: String, required: true },
+    businessBranchCode: { type: String, required: true },
     addressLine1: { type: String },
     addressLine2: { type: String },
     city: { type: String },
@@ -27,19 +27,44 @@ const businessInfoSchema = new Schema<IBusinessInfo>({
     zip: { type: String },
     country: { type: String },
     phoneNumber: { type: String },
-    email: { type: String, required: true },
+    email: { type: String },
     logoURL: { type: String },
     description: { type: String },
     managerName: { type: String },
-    listOfStaff: { type: [businessStaffInfoBriefSchema], default: [] },
     capacity: { type: Number },
+});
+
+// def a schema for businessInfo
+const businessInfoSchema = new Schema<IBusinessInfo>({
+    businessId: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    businessBranchInfos: {
+        type: [businessBranchInfoSchema],
+        default: [],
+        required: true,
+    },
+    // businessBranchCode: { type: String, required: true },
+    // addressLine1: { type: String },
+    // addressLine2: { type: String },
+    // city: { type: String },
+    // state: { type: String },
+    // zip: { type: String },
+    // country: { type: String },
+    // phoneNumber: { type: String },
+    email: { type: String, required: true },
+    // logoURL: { type: String },
+    // description: { type: String },
+    // managerName: { type: String },
+    // capacity: { type: Number },
     role: { type: String, required: true },
+    listOfStaff: { type: [businessStaffInfoBriefSchema], default: [] },
 });
 
 // def a schema for businessUserInfo
 const businessStaffInfoSchema = new Schema<IBusinessStaffInfoDetails>({
     businessStaffId: { type: String, required: true, unique: true },
     businessId: { type: String, required: true },
+    businessBranchCode: { type: String, required: true },
     firstName: { type: String },
     lastName: { type: String },
     DOB: { type: Date },

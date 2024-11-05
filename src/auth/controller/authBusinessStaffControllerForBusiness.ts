@@ -15,6 +15,8 @@ const createBusinessStaff = async (req: Request, res: Response) => {
     try {
         const {
             // businessId,
+            businessBranchName,
+            businessBranchCode,
             name,
             DOB,
             Sex,
@@ -75,6 +77,8 @@ const createBusinessStaff = async (req: Request, res: Response) => {
             {
                 $set: {
                     businessId,
+                    businessBranchName,
+                    businessBranchCode,
                     businessStaffId: staffRecord.uid,
                     firstName,
                     lastName,
@@ -106,6 +110,8 @@ const createBusinessStaff = async (req: Request, res: Response) => {
 
         // create a brief copy of the staffDetails and add it to the business_info collection
         const newStaffBrief = {
+            businessBranchName,
+            businessBranchCode,
             businessStaffId: staffDetails.businessStaffId,
             name: name,
             phoneNumber: phoneNumber,

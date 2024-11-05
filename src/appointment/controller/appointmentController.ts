@@ -12,6 +12,8 @@ const createAppointment = async (req: Request, res: Response) => {
         const {
             appointmentId,
             businessId,
+            businessBranchName,
+            businessBranchCode,
             customerId,
             serviceId,
             dateString,
@@ -31,6 +33,8 @@ const createAppointment = async (req: Request, res: Response) => {
         if (
             !appointmentId ||
             !businessId ||
+            !businessBranchName ||
+            !businessBranchCode ||
             !customerId ||
             !serviceId ||
             !dateString ||
@@ -53,6 +57,8 @@ const createAppointment = async (req: Request, res: Response) => {
                 $setOnInsert: {
                     appointmentId,
                     businessId,
+                    businessBranchName,
+                    businessBranchCode,
                     customerId,
                     serviceId,
                     dateString,

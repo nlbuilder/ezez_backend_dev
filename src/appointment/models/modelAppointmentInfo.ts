@@ -5,6 +5,8 @@ import { IAppointmentInfo } from "../types/typeAppointmentInfo";
 const appointmentInfoSchema = new Schema<IAppointmentInfo>({
     appointmentId: { type: String, required: true, unique: true },
     businessId: { type: String, required: true },
+    businessBranchName: { type: String, required: true },
+    businessBranchCode: { type: String, required: true },
     customerId: { type: String, required: true },
     serviceId: { type: String, required: true },
     dateString: { type: String, required: true },

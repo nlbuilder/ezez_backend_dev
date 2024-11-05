@@ -4,6 +4,7 @@ import { IServiceInfo } from "../types/typeServiceInfo";
 // def a schema for service info
 const serviceInfoSchema = new Schema<IServiceInfo>({
     businessId: { type: String, required: true },
+    businessBranchCode: { type: String, required: true },
     serviceId: { type: String, required: true, unique: true },
     serviceName: { type: String, required: true },
     photoUrl: { type: String },

@@ -13,8 +13,16 @@ const businessServiceInfo = businessServiceDB.collection(
 // def a function to create a new service
 const createService = async (req: Request, res: Response) => {
     try {
-        const { businessId, serviceId, serviceName, photoUrl, price, note } =
-            await req.body;
+        const {
+            businessId,
+            businessBranchName,
+            businessBranchCode,
+            serviceId,
+            serviceName,
+            photoUrl,
+            price,
+            note,
+        } = await req.body;
 
         // validate the request body
         if (!businessId || !serviceId || !serviceName || !price) {
@@ -29,6 +37,8 @@ const createService = async (req: Request, res: Response) => {
             {
                 $setOnInsert: {
                     businessId,
+                    businessBranchName,
+                    businessBranchCode,
                     serviceId,
                     serviceName,
                     photoUrl,
@@ -59,7 +69,12 @@ const createService = async (req: Request, res: Response) => {
 // def a function to create multiple services for the given businessId
 const createInitServices = async (req: Request, res: Response) => {
     try {
-        const { businessId, chosenOption } = req.body;
+        const {
+            businessId,
+            chosenOption,
+            businessBranchName,
+            businessBranchCode,
+        } = req.body;
 
         // validate the request body
         if (!businessId || !chosenOption) {
@@ -86,6 +101,8 @@ const createInitServices = async (req: Request, res: Response) => {
                 {
                     $setOnInsert: {
                         businessId,
+                        businessBranchName,
+                        businessBranchCode,
                         serviceId: uuidv4(),
                         serviceName,
                         photoUrl: "",
@@ -99,7 +116,7 @@ const createInitServices = async (req: Request, res: Response) => {
             // console.log(`Service Created/Updated: ${JSON.stringify(service)}`);
         }
 
-        return res.status(201).send({ message: "doing" });
+        return res.status(201).send({ message: "initial services created" });
     } catch (error) {
         console.log("Error in createMultipleServices: ", error); // log the error for debugging purposes
 

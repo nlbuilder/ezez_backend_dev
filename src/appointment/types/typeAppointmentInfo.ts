@@ -7,6 +7,8 @@ export interface ITime {
 export interface IAppointmentInfo {
     appointmentId: string;
     businessId: string;
+    businessBranchName: string;
+    businessBranchCode: string;
     customerId: string;
     serviceId: string;
     dateString: string;
