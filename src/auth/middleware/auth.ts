@@ -26,8 +26,14 @@ export const jwtParse = async (
 
     try {
         // decode the token using Firebase Admin SDK
+
+        // console.log("token: ", token);
         const decodedToken = await admin.auth().verifyIdToken(token);
+
+        // console.log("decodedToken: ", decodedToken);
         const businessId = decodedToken.sub;
+
+        // console.log("businessId: ", businessId);
 
         // find the business in the database
         const business = await businessInfo.findOne({ businessId });
