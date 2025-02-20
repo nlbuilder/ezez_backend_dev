@@ -12,3 +12,9 @@ node_modules/
 
 # ignore editor directories and files
 .vscode/*
+
+# ignore the .DS_Store file
+.DS_Store
+
+# ignore the .gitignore file
+.gitignore
